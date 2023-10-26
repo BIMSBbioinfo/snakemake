@@ -196,6 +196,7 @@ class SpawnedJobArgsFactory:
             ),
             w2a("deployment_settings.apptainer_prefix"),
             w2a("deployment_settings.apptainer_args"),
+            w2a("deployment_settings.guix_shell_args"),
             w2a("resource_settings.max_threads"),
             w2a(
                 "storage_settings.assume_shared_fs", flag="--no-shared-fs", invert=True

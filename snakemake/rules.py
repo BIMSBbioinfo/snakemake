@@ -91,6 +91,7 @@ class Rule(RuleInterface):
         self._benchmark = None
         self._conda_env = None
         self._container_img = None
+        self._guix = None
         self.is_containerized = False
         self.env_modules = None
         self._group = None
@@ -252,6 +253,14 @@ class Rule(RuleInterface):
     @container_img.setter
     def container_img(self, container_img):
         self._container_img = container_img
+
+    @property
+    def guix(self):
+        return self._guix
+
+    @guix.setter
+    def guix(self, guix):
+        self._guix = guix
 
     @property
     def input(self):

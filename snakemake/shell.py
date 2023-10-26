@@ -18,6 +18,7 @@ from snakemake.common import ON_WINDOWS, RULEFUNC_CONTEXT_MARKER
 from snakemake.logging import logger
 from snakemake.deployment import singularity
 from snakemake.deployment.conda import Conda
+from snakemake.deployment.guix import Guix
 from snakemake.exceptions import WorkflowError
 
 
@@ -161,6 +162,7 @@ class shell:
         shadow_dir = context.get("shadow_dir", None)
         resources = context.get("resources", {})
         singularity_args = context.get("singularity_args", "")
+        guix_manifest = context.get("guix", None)
         threads = context.get("threads", 1)
 
         cmd = " ".join((cls._process_prefix, cmd, cls._process_suffix)).strip()
@@ -183,6 +185,10 @@ class shell:
                 cmd = Conda(
                     container_img=container_img, prefix_path=conda_base_path
                 ).shellcmd(conda_env, cmd)
+
+        if guix_manifest:
+            cmd = Guix().shellcmd(guix_manifest, cmd)
+            logger.info(f"Launching guix shell for manifest: {guix_manifest}")
 
         tmpdir = None
         if len(cmd.replace("'", r"'\''")) + 2 > MAX_ARG_LEN:

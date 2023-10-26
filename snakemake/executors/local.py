@@ -132,6 +132,13 @@ class Executor(RealExecutor):
             in self.workflow.deployment_settings.deployment_method
             else None
         )
+        guix = (
+            job.guix
+            if DeploymentMethod.GUIX
+            in self.workflow.deployment_settings.deployment_method
+            else None
+        )
+
 
         benchmark = None
         benchmark_repeats = job.benchmark_repeats or 1

@@ -1553,6 +1553,15 @@ def get_argument_parser(profiles=None):
         help="Pass additional args to apptainer/singularity.",
     )
 
+    group_guix = parser.add_argument_group("GUIX")
+
+    group_guix.add_argument(
+        "--use-guix",
+        action="store_true",
+        help="If defined in the rule, run job within a Guix shell container. "
+        "If this flag is not set, the guix directive is ignored.",
+    )
+
     group_env_modules = parser.add_argument_group("ENVIRONMENT MODULES")
 
     group_env_modules.add_argument(
@@ -1791,6 +1800,8 @@ def args_to_api(args, parser):
             deployment_method.add(DeploymentMethod.APPTAINER)
         if args.use_envmodules:
             deployment_method.add(DeploymentMethod.ENV_MODULES)
+        if args.use_guix:
+            deployment_method.add(DeploymentMethod.GUIX)
 
         try:
             storage_settings = StorageSettings(

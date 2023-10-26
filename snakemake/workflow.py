@@ -1643,6 +1643,8 @@ class Workflow(WorkflowExecutorInterface):
                 or ruleinfo.shellcmd
                 or ruleinfo.notebook
             )
+            if ruleinfo.guix:
+                rule.guix = ruleinfo.guix
             if ruleinfo.container_img:
                 if invalid_rule:
                     raise RuleException(
@@ -1863,6 +1865,13 @@ class Workflow(WorkflowExecutorInterface):
         def decorate(ruleinfo):
             ruleinfo.container_img = container_img
             ruleinfo.is_containerized = True
+            return ruleinfo
+
+        return decorate
+
+    def guix(self, guix):
+        def decorate(ruleinfo):
+            ruleinfo.guix = guix
             return ruleinfo
 
         return decorate

@@ -199,7 +199,7 @@ class DeploymentSettings(SettingsBase, DeploymentSettingsExecutorInterface):
     ----------
 
     deployment_method
-        deployment method to use (CONDA, APPTAINER, ENV_MODULES)
+        deployment method to use (CONDA, APPTAINER, ENV_MODULES, GUIX)
     conda_prefix:
         the directory in which conda environments will be created (default None)
     conda_cleanup_pkgs:
@@ -220,6 +220,7 @@ class DeploymentSettings(SettingsBase, DeploymentSettingsExecutorInterface):
     conda_not_block_search_path_envvars: bool = False
     apptainer_args: str = ""
     apptainer_prefix: Optional[Path] = None
+    guix_shell_args: str = ""
 
     def imply_deployment_method(self, method: DeploymentMethod):
         self.deployment_method = set(self.deployment_method)
